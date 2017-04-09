@@ -1,6 +1,5 @@
 import numpy as np
 import CMM
-import SequenceCMM
 import random
 
 def MLE_algorithm(sequence):
@@ -36,7 +35,6 @@ def choose_number(array):
         if random_double <= sum(x[1] for x in arraynum[:counter+1]):
             return arraynum[counter][0]
 
-
 def generate_CMM(Pi, P, T):
     """
     Generate Markov Chain, using one-step transition matrix P and initial matrix Pi.
@@ -53,7 +51,7 @@ def generate_CMM(Pi, P, T):
             print("FUCC")
         counter = choose_number(P[counter])
         sequence.append(counter)
-    return SequenceCMM.SequenceCMM(sequence, Pi.shape[0])
+    return CMM.SequenceCMM(sequence, Pi.shape[0])
 
 
 def bootstrap(sequence, M=1000):
@@ -63,7 +61,7 @@ def bootstrap(sequence, M=1000):
     :param sequence: sequence of elements in range (0, A).
     :return: one-step transition matrix.
     """
-    Pi_mle = np.array([0.2, 0.6, 0.2])
+    Pi_mle = CMM.generatePi(sequence.A)
     P_mle = MLE_algorithm(sequence)
     randominstance = random.SystemRandom()
     bootstraps = [generate_CMM(Pi_mle, P_mle, randominstance.randint(50, 256)) for x in range(0, M)]
@@ -81,7 +79,7 @@ def smoothed_estimators(sequence, M=1000, u=0.5):
     :return: one-step transition matrix.
     """
 
-    Pi_mle = np.array([0.2, 0.6, 0.2])
+    Pi_mle = CMM.generatePi(sequence.A)
     P_mle = MLE_algorithm(sequence)
     omega = 1 + sequence.T**(-u)*sequence.A
     P_mle = (P_mle + sequence.T**(-u))/omega
@@ -90,13 +88,3 @@ def smoothed_estimators(sequence, M=1000, u=0.5):
     averageP = sum(bootstrappedP) / M
     return averageP
 
-
-
-cmm = CMM.CMM()
-print(cmm)
-# sequence = generateCMM(cmm.Pi, cmm.P, 5)
-sequence = SequenceCMM.SequenceCMM([1, 0, 0, 0, 0], 3)
-print(sequence.sequence)
-print(MLE_algorithm(sequence))
-print(bootstrap(sequence))
-print(smoothed_estimators(sequence))
