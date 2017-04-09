@@ -44,5 +44,5 @@ class Estimation:
 
 
 cmm = CMM.CMM()
-est = Estimation(cmm.P, cmm.N, 20, 100)
+est = Estimation(cmm.P, cmm.N, 25, 1000)
 est.graphic()

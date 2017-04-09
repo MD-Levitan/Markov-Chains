@@ -2,7 +2,7 @@ import numpy as np
 import CMM
 import random
 
-def MLE_algorithm(sequence):
+def MLE_algorithm(sequence, s):
     """
     Algorithm that calculates maximum likehood estimation of one-step transition matrix.
     :param sequence: sequence of elements in range (0, A).

@@ -8,17 +8,34 @@ class CMM:
             return
         self.N = N
         if Pi is None or P is None:
-            self.init_random_arg(N)
+            self.Pi = CMM.generate_random_Pi(N)
+            self.P = CMM.generate_random_P()
             return
         self.Pi = Pi
         self.P = P
 
-    # переписать на нормальный рандом
-    def init_random_arg(self, N):
-        self.N = N
-        self.P = np.ones((N, N))/N
-        self.Pi = [1/N]*N
-        self.Pi = np.array(self.Pi)
+    @staticmethod
+    def generate_random_P(N):
+        import random
+        P = np.zeros((N, N))
+        for j in range(0, N):
+            sum = 0
+            for i in range(0, N):
+                P[j][i] = random.random()
+                sum += P[j][i]
+            P[j] = [P[j][i]/sum for i in range(0, N)]
+        return P
+
+    @staticmethod
+    def generate_random_Pi(N):
+        import random
+        Pi = np.zeros(N)
+        sum = 0
+        for i in range(0, N):
+            Pi[i] = random.random()
+            sum += Pi[i]
+        Pi = [Pi[i] / sum for i in range(0, N)]
+        return Pi
 
     def init_from_file(self, name_file):
         """ Initilization from fyle "name_file"
@@ -81,7 +98,3 @@ class SequenceCMM:
             raise Exception("Error. Value of sequence doesn't belong this CMM.")
         self.CMM = CMM.CMM(N)
         self.A = self.CMM.N
-
-
-def generatePi(len):
-    return np.array([1/len]*len)
