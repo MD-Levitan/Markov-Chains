@@ -3,7 +3,7 @@ from HMM import HMM
 from HMM import SequenceHMM
 
 
-def forwardalgorithm(sequence):
+def forward_algorithm(sequence):
     if sequence.HMM is None:
         raise Exception("Error. HMM is not identified.")
 
@@ -16,7 +16,8 @@ def forwardalgorithm(sequence):
         alphaset.extend([alphat])
     return alphaset
 
-def backwardalgorithm(sequence):
+
+def backward_algorithm(sequence):
     if sequence.HMM is None:
         raise Exception("Error. HMM is not identified.")
 
@@ -29,15 +30,17 @@ def backwardalgorithm(sequence):
     beta_set.reverse()
     return beta_set
 
-def estimationsequenceforward(sequence, alphaset):
+
+def estimation_sequence_forward(sequence, alphaset):
     return sum(alphaset[sequence.T - 1][j] for j in range(0, sequence.A))
 
 
-def estimationsequenceforward_backawrd(sequence, alphaset, betaset):
+def estimation_sequence_forward_backward(sequence, alphaset, betaset):
     estimation = [sum(alphaset[i][j]*betaset[i][j] for j in range(0, sequence.A)) for i in range(0, sequence.T)]
     return estimation
 
-def doubleprobability(sequence, alphaset, betaset):
+
+def double_probability(sequence, alphaset, betaset):
     """
     Conjoint probability of 2 successful hidden state.
     :param sequence: hidden sequence which we estimate.
@@ -51,13 +54,14 @@ def doubleprobability(sequence, alphaset, betaset):
     P = sequence.HMM.P
     C = sequence.HMM.C
     seq = sequence.sequence
-    estimation = estimationsequenceforward(sequence, alphaset)
+    estimation = estimation_sequence_forward(sequence, alphaset)
     for t in range(0, sequence.T-1):
         ksiset[t] = np.array([[alphaset[t][i]*P[i][j]*C[j][seq[t+1]]*betaset[t+1][j]/estimation
                              for i in range(0, sequence.A)] for j in range(0, sequence.A)])
     return ksiset
 
-def marginalprobability(sequence, alphaset, betaset):
+
+def marginal_probability(sequence, alphaset, betaset):
     """
     Marginal probability hidden state.
     :param sequence: hidden sequence which we estimate.
@@ -66,33 +70,35 @@ def marginalprobability(sequence, alphaset, betaset):
     :return: gammaSet has 2 dimension: 1-st - for t=1,.., T-1
                                 2-nd - for i in A.
     """
-    estimation = estimationsequenceforward(sequence, alphaset)
+    estimation = estimation_sequence_forward(sequence, alphaset)
     gammaset = np.array([[alphaset[t][i]*betaset[t][i]/estimation
                           for i in range(0, sequence.A)] for t in range(0, sequence.T)])
     return gammaset
 
-def estimationinitialprobability(sequence):
+
+def estimation_initial_probability(sequence):
     """
     Estimation of initial probability(PI), using forward-backward algorithm.
     :param sequence: hidden sequence which we estimate.
     :return: estimated array PI.
     """
-    alphaset = forwardalgorithm(sequence)
-    betaset = backwardalgorithm(sequence)
-    gammaset = marginalprobability(sequence, alphaset, betaset)
+    alphaset = forward_algorithm(sequence)
+    betaset = backward_algorithm(sequence)
+    gammaset = marginal_probability(sequence, alphaset, betaset)
     Pi = [round(x, 4) for x in gammaset[0]]
     return Pi
 
-def estiamtionmatrixofprobability(sequence):
+
+def estimation_matrix_probability(sequence):
     """
     Estimation of matrix of probability(P), using forward-backward algorithm.
     :param sequence: hidden sequence which we estimate.
     :return: estimated matrix P.
     """
-    alphaset = forwardalgorithm(sequence)
-    betaset = backwardalgorithm(sequence)
-    gammaset = marginalprobability(sequence, alphaset, betaset)
-    ksiset = doubleprobability(sequence, alphaset, betaset)
+    alphaset = forward_algorithm(sequence)
+    betaset = backward_algorithm(sequence)
+    gammaset = marginal_probability(sequence, alphaset, betaset)
+    ksiset = double_probability(sequence, alphaset, betaset)
     # print(alphaset)
     # print(betaset)
     # print(gammaset)
@@ -102,28 +108,31 @@ def estiamtionmatrixofprobability(sequence):
                    for i in range(0, sequence.A)] for j in range(0, sequence.A)])
     return P
 
-def estiamtiontransitionmatrix(sequence):
+
+def estimation_transition_matrix(sequence):
     """
     Estimation of transition matrix(C), using forward-backward algorithm.
     :param sequence: hidden sequence which we estimate.
     :return: estimated transition matrix C.
     """
-    alphaset = forwardalgorithm(sequence)
-    betaset = backwardalgorithm(sequence)
-    gammaset = marginalprobability(sequence, alphaset, betaset)
+    alphaset = forward_algorithm(sequence)
+    betaset = backward_algorithm(sequence)
+    gammaset = marginal_probability(sequence, alphaset, betaset)
     C = np.array([[round(sum(gammaset[t][i] for t in range(0, sequence.T -1) if sequence.sequence[t] == j)
                    / sum(gammaset[t][i] for t in range(0, sequence.T - 1)), 4) for i in range(0, sequence.A)]
                   for j in range(0, sequence.A)])
     return C
 
-def print_generalestimation(result):
+
+def print_general_estimation(result):
     print("Estimations:\nPI:\n"+str(result[0]))
     print("P:\n"+str(result[1]))
     print("C\n"+str(result[2]))
 
-def generalestimation(sequence):
-    return [estimationinitialprobability(sequence), estiamtionmatrixofprobability(sequence),
-            estiamtiontransitionmatrix(sequence)]
+
+def general_estimation(sequence):
+    return [estimation_initial_probability(sequence), estimation_matrix_probability(sequence),
+            estimation_transition_matrix(sequence)]
 
 a = SequenceHMM()
 print(a)
@@ -131,19 +140,19 @@ b = HMM()
 print(b)
 a.setHMM(b)
 
-alpha = forwardalgorithm(a)
-beta = backwardalgorithm(a)
+alpha = forward_algorithm(a)
+beta = backward_algorithm(a)
 
 
-print(estimationsequenceforward(a, alpha))
+print(estimation_sequence_forward(a, alpha))
 # print(estimationsequenceforward_backawrd(a, alpha, beta))
 #
 # res = generalestimation(a)
 # print_generalestimation(res)
 
 
-ksi = doubleprobability(a, alpha, beta)
-gamma = marginalprobability(a, alpha, beta)
+ksi = double_probability(a, alpha, beta)
+gamma = marginal_probability(a, alpha, beta)
 
 # print(a.T)
 # print(gamma)

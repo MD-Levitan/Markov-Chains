@@ -39,8 +39,8 @@
       <file leaf-file-name="Algorithms.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Algorithms.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2466">
-              <caret line="137" column="0" lean-forward="false" selection-start-line="137" selection-start-column="0" selection-end-line="137" selection-end-column="0" />
+            <state relative-caret-position="861">
+              <caret line="162" column="0" lean-forward="true" selection-start-line="162" selection-start-column="0" selection-end-line="162" selection-end-column="0" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -77,8 +77,8 @@
         <option value="$PROJECT_DIR$/HMM.txt" />
         <option value="$PROJECT_DIR$/sequenceHMM.py" />
         <option value="$PROJECT_DIR$/HMM.py" />
-        <option value="$PROJECT_DIR$/Algorithms.py" />
         <option value="$PROJECT_DIR$/data.txt" />
+        <option value="$PROJECT_DIR$/Algorithms.py" />
       </list>
     </option>
   </component>
@@ -473,7 +473,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Algorithms.py</url>
-          <line>94</line>
+          <line>100</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -902,8 +902,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Algorithms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2466">
-          <caret line="137" column="0" lean-forward="false" selection-start-line="137" selection-start-column="0" selection-end-line="137" selection-end-column="0" />
+        <state relative-caret-position="861">
+          <caret line="162" column="0" lean-forward="true" selection-start-line="162" selection-start-column="0" selection-end-line="162" selection-end-column="0" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
