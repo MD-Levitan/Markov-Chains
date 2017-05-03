@@ -55,9 +55,10 @@ def double_probability(sequence, alphaset, betaset):
     C = sequence.HMM.C
     seq = sequence.sequence
     estimation = estimation_sequence_forward(sequence, alphaset)
+
     for t in range(0, sequence.T-1):
-        ksiset[t] = np.array([[alphaset[t][i]*P[i][j]*C[j][seq[t+1]]*betaset[t+1][j]/estimation
-                             for i in range(0, sequence.A)] for j in range(0, sequence.A)])
+        ksiset[t] = np.array([[alphaset[t][i] * P[i][j] * C[j][seq[t+1]] * betaset[t+1][j] / estimation
+                             for j in range(0, sequence.A)] for i in range(0, sequence.A)])
     return ksiset
 
 
@@ -71,7 +72,7 @@ def marginal_probability(sequence, alphaset, betaset):
                                 2-nd - for i in A.
     """
     estimation = estimation_sequence_forward(sequence, alphaset)
-    gammaset = np.array([[alphaset[t][i]*betaset[t][i]/estimation
+    gammaset = np.array([[alphaset[t][i] * betaset[t][i] / estimation
                           for i in range(0, sequence.A)] for t in range(0, sequence.T)])
     return gammaset
 
@@ -118,7 +119,7 @@ def estimation_transition_matrix(sequence):
     alphaset = forward_algorithm(sequence)
     betaset = backward_algorithm(sequence)
     gammaset = marginal_probability(sequence, alphaset, betaset)
-    C = np.array([[round(sum(gammaset[t][i] for t in range(0, sequence.T -1) if sequence.sequence[t] == j)
+    C = np.array([[round(sum(gammaset[t][i] for t in range(0, sequence.T - 1) if sequence.sequence[t] == j)
                    / sum(gammaset[t][i] for t in range(0, sequence.T - 1)), 4) for i in range(0, sequence.A)]
                   for j in range(0, sequence.A)])
     return C
@@ -145,18 +146,9 @@ beta = backward_algorithm(a)
 
 
 print(estimation_sequence_forward(a, alpha))
-# print(estimationsequenceforward_backawrd(a, alpha, beta))
-#
-# res = generalestimation(a)
-# print_generalestimation(res)
 
 
-ksi = double_probability(a, alpha, beta)
-gamma = marginal_probability(a, alpha, beta)
+res = general_estimation(a)
+print_general_estimation(res)
 
-# print(a.T)
-# print(gamma)
 
-for t in range(0, a.T-1):
-    [print(str(gamma[t][i]) +" "+ str(sum(ksi[t][i][j] for j in range(0, a.A)))) for i in range(0, a.A)]
-    print()
