@@ -1,30 +1,33 @@
 import numpy as np
-import sequenceHMM
-import HMM
+from HMM import HMM
+from HMM import SequenceHMM
+
 
 def forwardalgorithm(sequence):
-    if sequence.HMM == None:
+    if sequence.HMM is None:
         raise Exception("Error. HMM is not identified.")
 
     alpha = [sequence.HMM.C[j][sequence.sequence[0]]*sequence.HMM.Pi[j] for j in range(0, sequence.A)]
     alphaset = [alpha]
     for t in range(1, sequence.T):
-        alphat = [sequence.HMM.C[j][sequence.sequence[t]]*sum(sequence.HMM.P[i][j] for i in range(0, sequence.A))*alphaset[t-1][j] for j in range(0, sequence.A)]
+        alphat = [sequence.HMM.C[j][sequence.sequence[t]]*sum(sequence.HMM.P[i][j] * alphaset[t-1][i]
+                                                              for i in range(0, sequence.A))
+                  for j in range(0, sequence.A)]
         alphaset.extend([alphat])
     return alphaset
 
 def backwardalgorithm(sequence):
-    if sequence.HMM == None:
+    if sequence.HMM is None:
         raise Exception("Error. HMM is not identified.")
 
     beta = [1]*sequence.A
-    betaM = [beta]
+    beta_set = [beta]
     for t in range(sequence.T-1, 0, -1):
-        betat = [sum(sequence.HMM.P[i][j]*sequence.HMM.C[j][sequence.sequence[sequence.T-t-1]]
-                     for i in range(0, sequence.A))*betaM[sequence.T-t-1][j] for j in range(0, sequence.A)]
-        betaM.extend([betat])
-    betaM.reverse()
-    return betaM
+        betat = [sum(sequence.HMM.P[i][j]*sequence.HMM.C[j][sequence.sequence[t]] * beta_set[sequence.T-t-1][j]
+                     for j in range(0, sequence.A)) for i in range(0, sequence.A)]
+        beta_set.extend([betat])
+    beta_set.reverse()
+    return beta_set
 
 def estimationsequenceforward(sequence, alphaset):
     return sum(alphaset[sequence.T - 1][j] for j in range(0, sequence.A))
@@ -50,7 +53,7 @@ def doubleprobability(sequence, alphaset, betaset):
     seq = sequence.sequence
     estimation = estimationsequenceforward(sequence, alphaset)
     for t in range(0, sequence.T-1):
-        ksiset[t] = np.array([[alphaset[t][j]*P[i][j]*C[j][seq[t+1]]*betaset[t+1][j]/estimation
+        ksiset[t] = np.array([[alphaset[t][i]*P[i][j]*C[j][seq[t+1]]*betaset[t+1][j]/estimation
                              for i in range(0, sequence.A)] for j in range(0, sequence.A)])
     return ksiset
 
@@ -65,7 +68,7 @@ def marginalprobability(sequence, alphaset, betaset):
     """
     estimation = estimationsequenceforward(sequence, alphaset)
     gammaset = np.array([[alphaset[t][i]*betaset[t][i]/estimation
-                          for i in range(0, sequence.A)] for t in range(0, sequence.T-1)])
+                          for i in range(0, sequence.A)] for t in range(0, sequence.T)])
     return gammaset
 
 def estimationinitialprobability(sequence):
@@ -77,7 +80,7 @@ def estimationinitialprobability(sequence):
     alphaset = forwardalgorithm(sequence)
     betaset = backwardalgorithm(sequence)
     gammaset = marginalprobability(sequence, alphaset, betaset)
-    Pi = [round(x,4) for x in gammaset[0]]
+    Pi = [round(x, 4) for x in gammaset[0]]
     return Pi
 
 def estiamtionmatrixofprobability(sequence):
@@ -90,10 +93,10 @@ def estiamtionmatrixofprobability(sequence):
     betaset = backwardalgorithm(sequence)
     gammaset = marginalprobability(sequence, alphaset, betaset)
     ksiset = doubleprobability(sequence, alphaset, betaset)
-    print(alphaset)
-    print(betaset)
-    print(gammaset)
-    print(ksiset)
+    # print(alphaset)
+    # print(betaset)
+    # print(gammaset)
+    # print(ksiset)
     P = np.array([[round(sum(ksiset[t][i][j] for t in range(0, sequence.T-1))
                    / sum(gammaset[t][i] for t in range(0, sequence.T-1)), 4)
                    for i in range(0, sequence.A)] for j in range(0, sequence.A)])
@@ -122,23 +125,29 @@ def generalestimation(sequence):
     return [estimationinitialprobability(sequence), estiamtionmatrixofprobability(sequence),
             estiamtiontransitionmatrix(sequence)]
 
-a=sequenceHMM.sequenceHMM()
-b=HMM.HMM()
-a.seteyeHMM(2,2)
-# print(a)
+a = SequenceHMM()
+print(a)
+b = HMM()
+print(b)
+a.setHMM(b)
+
 alpha = forwardalgorithm(a)
 beta = backwardalgorithm(a)
-print(estimationsequenceforward(a, alpha))
-print(estimationsequenceforward_backawrd(a, alpha, beta))
-est = generalestimation(a)
-print_generalestimation(est)
-# c = HMM.HMM(a.A, a.A, [0.5, 0.5], est[1], est[2])
-# a.setHMM(c)
-# alpha = forwardalgorithm_HMM(a)
-# beta = backwardalgorithm_HMM(a)
-# print(alpha)
-# print(beta)
-# print(a)
-# print(estimationsequenceforward(a, alpha))
-# print(estimationsequenceforward_backawrd(a, alpha, beta))
 
+
+print(estimationsequenceforward(a, alpha))
+# print(estimationsequenceforward_backawrd(a, alpha, beta))
+#
+# res = generalestimation(a)
+# print_generalestimation(res)
+
+
+ksi = doubleprobability(a, alpha, beta)
+gamma = marginalprobability(a, alpha, beta)
+
+# print(a.T)
+# print(gamma)
+
+for t in range(0, a.T-1):
+    [print(str(gamma[t][i]) +" "+ str(sum(ksi[t][i][j] for j in range(0, a.A)))) for i in range(0, a.A)]
+    print()
