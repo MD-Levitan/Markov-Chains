@@ -174,7 +174,7 @@ class SequenceHMM:
         self.HMM = None
 
     def setHMM(self, hmm):
-        if hmm.M<self.A:
+        if hmm.M < self.A:
             raise Exception("Error. Value of sequence doesn't belong this HMM.")
         self.HMM = hmm
         self.A = self.HMM.M

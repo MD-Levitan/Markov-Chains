@@ -39,7 +39,7 @@ def estimation_sequence_forward_backward(sequence, alphaset, betaset):
     return estimation
 
 
-def double_probability(sequence, alphaset, betaset, estimation_seq):
+def double_probability(sequence, alphaset, betaset, estimation_seq, hmm):
     """
     Conjoint probability of 2 successful hidden state.
     :param sequence: hidden sequence which we estimate.
@@ -51,8 +51,8 @@ def double_probability(sequence, alphaset, betaset, estimation_seq):
                                 3-d - for j in A.
     """
     ksiset = np.zeros((sequence.T-1, sequence.A, sequence.A))
-    P = sequence.HMM.P
-    C = sequence.HMM.C
+    P = hmm.P
+    C = hmm.C
     seq = sequence.sequence
 
     for t in range(0, sequence.T-1):
@@ -75,11 +75,13 @@ def marginal_probability(sequence, alphaset, betaset, estimation_seq):
     return gammaset
 
 
-def estimation_model(sequence, hmm, eps=0.001):
+def estimation_model(sequence, hmm, eps=0.000001):
     """
     Estimation of initial probability(PI), matrix of probability(P),transition matrix(C),
      using forward-backward algorithm.
     :param sequence:
+    :param hmm: initial model. It can be random model.
+    :param eps: 
     :return:
     """
     Pi_old = hmm.Pi
@@ -93,10 +95,9 @@ def estimation_model(sequence, hmm, eps=0.001):
         betaset = backward_algorithm(sequence, hmm)
 
         estimation_seq = estimation_sequence_forward(sequence, alphaset)
-        print(str(counter) + " " + str(estimation_seq))
 
         gammaset = marginal_probability(sequence, alphaset, betaset, estimation_seq)
-        ksiset = double_probability(sequence, alphaset, betaset, estimation_seq)
+        ksiset = double_probability(sequence, alphaset, betaset, estimation_seq, hmm)
 
         Pi = [round(x, 4) for x in gammaset[0]]
 
