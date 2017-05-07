@@ -39,21 +39,24 @@ class CMM_S:
         Generate Matrix P using params.
         :param s: order of chain(size of memory).
         :param N: size of alphabet.
-        :param params: matrix of params, with size 
-        :return:
+        :param params: matrix of params, with size N^s * (N-1)
+        :return:matrix P.
         """
-        import random
         P = np.zeros((N ** s, N))
         for j in range(0, N ** s):
-            sum = 0
-            for i in range(0, N):
-                P[j][i] = random.random()
-                sum += P[j][i]
-            P[j] = [P[j][i] / sum for i in range(0, N)]
+            params_j = params[j]
+            params_j.append(1-sum(params_j))
+            P[j] = params_j
         return P
 
     @staticmethod
     def generate_random_Pi(s, N):
+        """
+        Generate Array Pi using random.
+        :param s: order of chain(size of memory).
+        :param N: size of alphabet.
+        :return:matrix Pi.
+        """
         import random
         Pi = np.zeros(N**s)
         sum = 0
@@ -61,6 +64,19 @@ class CMM_S:
             Pi[i] = random.random()
             sum += Pi[i]
         Pi = [Pi[i] / sum for i in range(0, N**s)]
+        return Pi
+
+    @staticmethod
+    def generate_Pi(s, N, params):
+        """
+        Generate Array Pi using params.
+        :param s: order of chain(size of memory).
+        :param N: size of alphabet.
+        :param params: array of params, with size N^s - 1
+        :return:matrix Pi.
+        """
+        Pi = params
+        Pi.append(1 - sum(params))
         return Pi
 
     def init_from_file(self, name_file):
@@ -82,6 +98,3 @@ class CMM_S:
 
     def __str__(self, ):
         return "Pi: "+str(self.Pi)+"\nP: "+str(self.P)
-
-print(CMM_S.generate_random_P(2, 2))
-print(CMM_S.generate_random_Pi(2, 2))

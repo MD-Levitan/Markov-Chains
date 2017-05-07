@@ -135,7 +135,7 @@ class HMM:
             self.C[i] = np.array([float(x) for x in file.readline().split(" ") if not x.isalpha()])
 
     def __str__(self, ):
-        return "Pi: "+str(self.Pi)+"\nP: "+str(self.P)+"\nC: "+str(self.C)
+        return "Pi: "+str(np.round(self.Pi, 5))+"\nP: "+str(np.round(self.P, 5))+"\nC: "+str(np.round(self.C, 5))
 
     def __getattribute__(self, *args, **kwargs):
         return super().__getattribute__(*args, **kwargs)

@@ -3,17 +3,16 @@ from HMM import HMM
 from HMM import SequenceHMM
 
 
-#Подумать над модификацией, просто какое-то говно
+
 def choose_number(array):
     import random
     csprng = random.SystemRandom()
     random_double = csprng.random()
-    arraynum = list(zip([x for x in range(0, len(array))], array))
+    summary = 0
     for counter in range(0, len(array)):
-        if random_double == 1.0:
-            return arraynum[len(array)-1][0]
-        if random_double <= sum(x[1] for x in arraynum[:counter+1]):
-            return arraynum[counter][0]
+        summary += array[counter]
+        if random_double <= summary:
+            return counter
 
 
 def generate_HMM(N, M, Pi, P, C, T):
@@ -31,9 +30,6 @@ def generate_HMM(N, M, Pi, P, C, T):
     counter = choose_number(P[initial_val])
     sequence = [initial_val, counter]
     for i in range(0, T-2):
-        if counter is None:
-            print("FUCC")
-        print(P[counter])
         counter = choose_number(P[counter])
         sequence.append(counter)
     sequence = [choose_number(C[value]) for value in sequence]
@@ -149,7 +145,7 @@ def marginal_probability(sequence, alphaset, betaset, estimation_seq):
     return gammaset
 
 
-def estimation_model(sequence, hmm, eps=0.000001):
+def estimation_model(sequence, hmm, eps=0.000000001):
     """
     Estimation of initial probability(PI), matrix of probability(P),transition matrix(C),
      using forward-backward algorithm.
@@ -173,27 +169,27 @@ def estimation_model(sequence, hmm, eps=0.000001):
         gammaset = marginal_probability(sequence, alphaset, betaset, estimation_seq)
         ksiset = double_probability(sequence, alphaset, betaset, estimation_seq, hmm)
 
-        Pi = [round(x, 4) for x in gammaset[0]]
+        Pi = [x for x in gammaset[0]]
 
-        P = np.array([[round(sum(ksiset[t][i][j] for t in range(0, sequence.T - 1))
-                         / sum(gammaset[t][i] for t in range(0, sequence.T - 1)), 4)
-                   for i in range(0, sequence.A)] for j in range(0, sequence.A)])
+        P = np.array([[sum(ksiset[t][i][j] for t in range(0, sequence.T - 1))
+                       / sum(gammaset[t][i] for t in range(0, sequence.T - 1))
+                       for j in range(0, sequence.A)] for i in range(0, sequence.A)])
 
-        C = np.array([[round(sum(gammaset[t][i] for t in range(0, sequence.T - 1) if sequence.sequence[t] == j)
-                         / sum(gammaset[t][i] for t in range(0, sequence.T - 1)), 4) for i in range(0, sequence.A)]
-                  for j in range(0, sequence.A)])
+        C = np.array([[sum(gammaset[t][i] for t in range(0, sequence.T - 1) if sequence.sequence[t] == j)
+                       / sum(gammaset[t][i] for t in range(0, sequence.T - 1)) for j in range(0, sequence.A)]
+                      for i in range(0, sequence.A)])
 
         std_deviation = sum(sum((P[i][j] - P_old[i][j]) * (P[i][j] - P_old[i][j])
-                            for i in range(0, sequence.A)) for j in range(0, sequence.A))
+                                for i in range(0, sequence.A)) for j in range(0, sequence.A))
         counter += 1
-        if std_deviation < eps:
-            break;
+        hmm = HMM(hmm.N, hmm.M, Pi=Pi_old, P=P_old, C=C_old)
         Pi_old = Pi
         P_old = P
         C_old = C
-        hmm = HMM(hmm.N, hmm.M, Pi=Pi_old, P=P_old, C=C_old)
+        if std_deviation < eps:
+            break;
 
-    return [Pi, P, C]
+    return hmm
 
 
 
@@ -246,25 +242,25 @@ def estimation_model(sequence, hmm, eps=0.000001):
 #     return C
 
 
-def print_general_estimation(result):
-    print("Estimations:\nPI:\n"+str(result[0]))
-    print("P:\n"+str(result[1]))
-    print("C\n"+str(result[2]))
 
 
-a = SequenceHMM()
+b = HMM(2, 2)
+a = generate_HMM(2, 2, b.Pi, b.P, b.C, 10000)
+print(a.A)
 print(a)
-b = HMM()
+
 print(b)
 a.setHMM(b)
 
 alpha = forward_algorithm(a, b)
 beta = backward_algorithm(a, b)
+
+
 print(estimation_sequence_forward(a, alpha))
 
 
 res = estimation_model(a, b)
-print_general_estimation(res)
+print(res)
 
 print(algorithm_viterbi(a, b))
 
@@ -272,5 +268,3 @@ print(algorithm_viterbi(a, b))
 print()
 print()
 print()
-
-print(generate_HMM(2, 2, b.Pi, b.P, b.C, 100))
