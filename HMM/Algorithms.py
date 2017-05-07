@@ -3,6 +3,42 @@ from HMM import HMM
 from HMM import SequenceHMM
 
 
+#Подумать над модификацией, просто какое-то говно
+def choose_number(array):
+    import random
+    csprng = random.SystemRandom()
+    random_double = csprng.random()
+    arraynum = list(zip([x for x in range(0, len(array))], array))
+    for counter in range(0, len(array)):
+        if random_double == 1.0:
+            return arraynum[len(array)-1][0]
+        if random_double <= sum(x[1] for x in arraynum[:counter+1]):
+            return arraynum[counter][0]
+
+
+def generate_HMM(N, M, Pi, P, C, T):
+    """
+    Generate Hidden Markov Chain, using one-step transition matrix P, initial matrix Pi and transition matrix C.
+    :param N: size of hidden alphabet.
+    :param M: size of observed alphabet.
+    :param Pi: initial matrix.
+    :param P: one-step transition matrix.
+    :param C: transition matrix C.
+    :param T: length of sequence.
+    :return: sequence CMM.
+    """
+    initial_val = choose_number(Pi)
+    counter = choose_number(P[initial_val])
+    sequence = [initial_val, counter]
+    for i in range(0, T-2):
+        if counter is None:
+            print("FUCC")
+        print(P[counter])
+        counter = choose_number(P[counter])
+        sequence.append(counter)
+    sequence = [choose_number(C[value]) for value in sequence]
+    return SequenceHMM(sequence, M)
+
 def algorithm_viterbi(sequence, hmm):
     """
 
@@ -119,7 +155,7 @@ def estimation_model(sequence, hmm, eps=0.000001):
      using forward-backward algorithm.
     :param sequence:
     :param hmm: initial model. It can be random model.
-    :param eps: 
+    :param eps:
     :return:
     """
     Pi_old = hmm.Pi
@@ -233,3 +269,8 @@ print_general_estimation(res)
 print(algorithm_viterbi(a, b))
 
 
+print()
+print()
+print()
+
+print(generate_HMM(2, 2, b.Pi, b.P, b.C, 100))
