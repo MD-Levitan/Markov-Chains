@@ -3,23 +3,61 @@ from HMM import HMM
 from HMM import SequenceHMM
 
 
-def forward_algorithm(sequence, HMM):
-    C = HMM.C
-    Pi = HMM.Pi
-    P = HMM.P
-    alpha = [C[j][sequence.sequence[0]] * Pi[j] for j in range(0, sequence.A)]
-    alphaset = [alpha]
+def algorithm_viterbi(sequence, hmm):
+    """
+
+    :param sequence:
+    :param hmm:
+    :return:
+    """
+    C = hmm.C
+    Pi = hmm.Pi
+    P = hmm.P
+    delta = [Pi[j] * C[j][sequence.sequence[0]] for j in range(0, sequence.A)]
+    delta_set = [delta]
+
     for t in range(1, sequence.T):
-        alphat = [C[j][sequence.sequence[t]]*sum(P[i][j] * alphaset[t-1][i] for i in range(0, sequence.A))
+        delta_t = [C[j][sequence.sequence[t]] * max([delta_set[t - 1][i] * P[i][j] for i in range(0, sequence.A)])
+                   for j in range(0, sequence.A)]
+        delta_set.extend([delta_t])
+
+    hidden_states = []
+    for t in range(sequence.T-1, -1, -1):
+        x_t = np.argmax(delta_set[t])
+        hidden_states.append(x_t)
+
+    return hidden_states
+
+
+def forward_algorithm(sequence, hmm):
+    """
+
+    :param sequence:
+    :param hmm:
+    :return:
+    """
+    C = hmm.C
+    Pi = hmm.Pi
+    P = hmm.P
+    alpha = [C[j][sequence.sequence[0]] * Pi[j] for j in range(0, sequence.A)]
+    alpha_set = [alpha]
+    for t in range(1, sequence.T):
+        alphat = [C[j][sequence.sequence[t]]*sum(P[i][j] * alpha_set[t-1][i] for i in range(0, sequence.A))
                   for j in range(0, sequence.A)]
-        alphaset.extend([alphat])
-    return alphaset
+        alpha_set.extend([alphat])
+    return alpha_set
 
 
-def backward_algorithm(sequence, HMM):
-    C = HMM.C
-    Pi = HMM.Pi
-    P = HMM.P
+def backward_algorithm(sequence, hmm):
+    """
+
+    :param sequence:
+    :param hmm:
+    :return:
+    """
+    C = hmm.C
+    Pi = hmm.Pi
+    P = hmm.P
     beta = [1] * sequence.A
     beta_set = [beta]
     for t in range(sequence.T-1, 0, -1):
@@ -191,5 +229,7 @@ print(estimation_sequence_forward(a, alpha))
 
 res = estimation_model(a, b)
 print_general_estimation(res)
+
+print(algorithm_viterbi(a, b))
 
 
