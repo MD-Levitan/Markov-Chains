@@ -244,27 +244,27 @@ def estimation_model(sequence, hmm, eps=0.000000001):
 
 
 
-b = HMM(2, 2)
-a = generate_HMM(2, 2, b.Pi, b.P, b.C, 10000)
-print(a.A)
-print(a)
-
-print(b)
-a.setHMM(b)
-
-alpha = forward_algorithm(a, b)
-beta = backward_algorithm(a, b)
-
-
-print(estimation_sequence_forward(a, alpha))
-
-
-res = estimation_model(a, b)
-print(res)
-
-print(algorithm_viterbi(a, b))
-
-
-print()
-print()
-print()
+# b = HMM(2, 2)
+# a = generate_HMM(2, 2, b.Pi, b.P, b.C, 10000)
+# print(a.A)
+# print(a)
+#
+# print(b)
+# a.setHMM(b)
+#
+# alpha = forward_algorithm(a, b)
+# beta = backward_algorithm(a, b)
+#
+#
+# print(estimation_sequence_forward(a, alpha))
+#
+#
+# res = estimation_model(a, b)
+# print(res)
+#
+# print(algorithm_viterbi(a, b))
+#
+#
+# print()
+# print()
+# print()
