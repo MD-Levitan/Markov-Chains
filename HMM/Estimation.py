@@ -5,7 +5,7 @@ import numpy as np
 
 
 class Estimation:
-    
+
         def __init__(self, model, l_max=1000, k_max=1000):
             self.model = model
             self.L_max = l_max

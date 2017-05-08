@@ -1,17 +1,17 @@
 import numpy as np
 
 
-class HMM:
-    def __init__(self, N=None, M=None, Pi=None, P=None, C=None, name_file="HMM.txt"):
+class DCMM:
+    def __init__(self, N=None, M=None, Pi=None, P=None, C=None, name_file="DCMM.txt"):
         if N is None or M is None:
             self.init_from_file(name_file)
             return
         self.N = N
         self.M = M
         if Pi is None or P is None or C is None:
-            self.Pi = HMM.generate_random_Pi(N)
-            self.P = HMM.generate_random_P(N)
-            self.C = HMM.generate_random_C(N, M)
+            self.Pi = DCMM.generate_random_Pi(N)
+            self.P = DCMM.generate_random_P(N)
+            self.C = DCMM.generate_random_C(N, M)
             return
         self.Pi = Pi
         self.P = P
@@ -58,13 +58,14 @@ class HMM:
         :return: matrix C.
         """
         import random
-        P = np.zeros((N, M))
-        for j in range(0, N):
-            sum = 0
-            for i in range(0, M):
-                P[j][i] = random.random()
-                sum += P[j][i]
-            P[j] = [P[j][i] / sum for i in range(0, M)]
+        P = np.zeros((N, N, M))
+        for k in range(0, N):
+            for j in range(0, N):
+                sum = 0
+                for i in range(0, M):
+                    P[k][j][i] = random.random()
+                    sum += P[k][j][i]
+                P[k][j] = [P[j][i] / sum for i in range(0, N)]
         return P
 
     @staticmethod
@@ -76,8 +77,8 @@ class HMM:
         :param params: matrix of params, with size M * (M-1)
         :return:matrix C.
         """
-        P = np.zeros((N, M))
-        for j in range(0, N):
+        P = np.zeros((M, N))
+        for j in range(0, M):
             params_j = params[j]
             params_j.append(1 - sum(params_j))
             P[j] = params_j

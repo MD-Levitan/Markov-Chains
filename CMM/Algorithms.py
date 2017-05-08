@@ -109,7 +109,7 @@ def generate_CMM_S(s, A, Pi, P, T):
         counter_with_memory = counter_with_memory % (A * (s-1)) * A + counter
     return SequenceCMM(sequence, A)
 
-def bootstrap(sequence, M=1000):
+def bootstrap(sequence, M=100):
     """
     Bootstrap algorithm which calculates one-step transition matrix, using bootstrap sequences, that is generated, using
     MLE of one-step transition matrix.
@@ -142,5 +142,10 @@ def smoothed_estimators(sequence, M=1000, u=0.5):
     bootstrappedP = [MLE_algorithm(x) for x in bootstraps]
     averageP = sum(bootstrappedP) / M
     return averageP
+
+def estimation_model(sequence, model):
+    P = bootstrap(sequence)
+    cmm = CMM(model.N, model.Pi, P)
+    return cmm
 
 #print(generate_CMM_S(2, 2, CMM_S.generate_random_Pi(2, 2), CMM_S.generate_random_P(2, 2), 10).sequence)
