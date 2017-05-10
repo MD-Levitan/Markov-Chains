@@ -2,7 +2,7 @@
 import numpy as np
 
 class CMM_S:
-    def __init__(self,s=None, N=None, Pi=None, P=None, name_file="CMM_S.txt"):
+    def __init__(self, s=None, N=None, Pi=None, P=None, name_file="CMM_S.txt"):
         if N is None or s is None:
             self.init_from_file(name_file)
             return
@@ -97,4 +97,55 @@ class CMM_S:
             self.P[i] = np.array([float(x) for x in file.readline().split(" ") if not x.isalpha()])
 
     def __str__(self, ):
-        return "Pi: "+str(self.Pi)+"\nP: "+str(self.P)
+        return "Pi: " + str(np.round(self.Pi, 5)) + "\nP: " + str(np.round(self.P, 5))
+
+
+class SequenceCMM_S:
+    def __init__(self, seq, s=None, A=None, cmm_s=None, name_file="data.txt"):
+        if cmm_s is None:
+            self.sequence = list(seq)
+            self.T = len(self.sequence)
+            self.CMM_S = None
+            if s is None:
+                self.s = 2
+            else:
+                self.s = s
+            if A is None:
+                self.A = np.math.floor(max(self.sequence) + 1)
+            else:
+                self.A = A
+            return
+        if seq is None:
+            self.init_from_file(name_file)
+            return
+        self.sequence = list(seq)
+        self.T = len(self.sequence)
+        self.CMM_S = cmm_s
+        if cmm_s.N < max(self.sequence):
+            raise Exception("Error. Value of sequence doesn't belong this HMM.")
+        self.A = self.CMM_S.N
+        self.s = self.CMM_S.s
+
+    def init_from_file(self, name_file="data.txt"):
+        """ Initilization from fyle "name_file"
+            Sequence of values, which should be in [0,A).
+         """
+        file = open(name_file, mode='r')
+        self.sequence = np.array([int(x) for x in file.readline().split(" ") if x.isdigit()])
+        self.T = len(self.sequence)
+        self.A = np.math.floor(max(self.sequence) + 1)
+        self.CMM_S = None
+
+    def set_CMM_S(self, cmm_s):
+        if cmm_s.N < self.A:
+            raise Exception("Error. Value of sequence doesn't belong this CMM.")
+        self.CMM_S = cmm_s
+        self.A = self.CMM_S.N
+        self.s = self.CMM_S.s
+
+    def set_eye_CMM_S(self, s, N):
+        if N < self.A:
+            raise Exception("Error. Value of sequence doesn't belong this CMM.")
+        self.CMM_S = CMM_S(s, N)
+        self.A = self.CMM_S.N
+        self.s = self.CMM_S.s

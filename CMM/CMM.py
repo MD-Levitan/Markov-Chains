@@ -53,7 +53,7 @@ class CMM:
             self.P[i] = np.array([float(x) for x in file.readline().split(" ") if not x.isalpha()])
 
     def __str__(self, ):
-        return "Pi: "+str(self.Pi)+"\nP: "+str(self.P)
+        return "Pi: " + str(np.round(self.Pi, 5)) + "\nP: " + str(np.round(self.P, 5))
 
 
 class SequenceCMM:
@@ -68,7 +68,7 @@ class SequenceCMM:
                 self.A = A
             return
         if seq is None:
-            self.initfromfile(name_file)
+            self.init_from_file(name_file)
             return
         self.sequence = list(seq)
         self.T = len(self.sequence)
@@ -96,5 +96,5 @@ class SequenceCMM:
     def set_eye_CMM(self, N):
         if N < self.A:
             raise Exception("Error. Value of sequence doesn't belong this CMM.")
-        self.CMM = CMM.CMM(N)
+        self.CMM = CMM(N)
         self.A = self.CMM.N

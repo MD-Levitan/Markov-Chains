@@ -2,7 +2,8 @@ import numpy as np
 from CMM import CMM
 from CMM import SequenceCMM
 from CMM_S import CMM_S
-import random
+from CMM_S import SequenceCMM_S
+
 
 def MLE_algorithm(sequence):
     """
@@ -17,38 +18,38 @@ def MLE_algorithm(sequence):
     P = P/n
     for i in range(0, sequence.A):
         if n[i] == 0:
-            eye = np.eye(sequence.A, k=i)[0]
-            eye.shape = sequence.A
-            P[i] = eye
+            P[i] = [1 / sequence.A] * sequence.A
     return P
 
 
 def transition(sequence, i, j):
     return sum([1 for t in range(0, sequence.T-1) if sequence.sequence[t] == i and sequence.sequence[t+1] == j])
 
-def MLE_algorithm_s(sequence, s):
+def MLE_algorithm_s(sequence):
     """
-    Algorithm that calculates maximum likehood estimation of one-step transition matrix.
+    Algorithm that calculates maximum likehood estimation of s-step transition matrix.
     :param sequence: sequence of elements in range (0, A).
-    :return: Maximum likehood estimation of one-step transition matrix - it's a matrix of size AxA.
+    :return: Maximum likehood estimation of s-step transition matrix - it's a matrix of size (A^s) x A.
     """
+    s = sequence.s
     np.seterr(divide='ignore', invalid='ignore')
     array_of_value = [from_value_to_array(s, sequence.A, val) for val in range(0, sequence.A ** s)]
-    n = np.array([sum([1 for t in range(0, sequence.T-s) if sequence.sequence[t:t+s] == val])
-                 for val in array_of_value])
-    n.shape = (sequence.A ** s, 1)
+    # n = np.array([sum([1 for t in range(0, sequence.T-s) if sequence.sequence[t:t+s] == val])
+    #              for val in array_of_value])
     P = np.array([[transition_s(sequence, i, j, s) for j in range(0, sequence.A)] for i in array_of_value])
+    n = np.array([sum([P[i][j] for j in range(0, sequence.A)]) for i in range(0, sequence.A ** s)])
+    n.shape = (sequence.A ** s, 1)
     P = P/n
     for i in range(0, sequence.A ** s):
         if n[i] == 0:
-            eye = np.eye(sequence.A, k=i)[0]
-            eye.shape = sequence.A
-            P[i] = eye
+            P[i] = [1 / sequence.A] * sequence.A
     return P
+
 
 def transition_s(sequence, array_i, j, s):
     return sum([1 for t in range(0, sequence.T-s) if sequence.sequence[t:t+s] == array_i
                 and sequence.sequence[t+s] == j])
+
 
 def choose_number(array):
     import random
@@ -59,6 +60,7 @@ def choose_number(array):
         summary += array[counter]
         if random_double <= summary:
             return counter
+
 
 def generate_CMM(A, Pi, P, T):
     """
@@ -107,7 +109,17 @@ def generate_CMM_S(s, A, Pi, P, T):
         counter = choose_number(P[counter_with_memory])
         sequence.append(counter)
         counter_with_memory = counter_with_memory % (A * (s-1)) * A + counter
-    return SequenceCMM(sequence, A)
+    return SequenceCMM_S(sequence, s, A)
+
+
+def test_flat(matrix):
+    for i in range(0, np.shape(matrix)[0]):
+        for j in range(0, np.shape(matrix)[1]):
+            if matrix[i][j] == 0:
+                return True
+    return False
+
+
 
 def bootstrap(sequence, M=100):
     """
@@ -118,8 +130,25 @@ def bootstrap(sequence, M=100):
     """
     Pi_mle = CMM.generate_random_Pi(sequence.A)
     P_mle = MLE_algorithm(sequence)
+    if test_flat(P_mle):
+        return smoothed_estimators(sequence, M)
     bootstraps = [generate_CMM(sequence.A, Pi_mle, P_mle, sequence.T) for _ in range(0, M)]
     bootstrappedP = [MLE_algorithm(x) for x in bootstraps]
+    averageP = sum(bootstrappedP)/M
+    return averageP
+
+
+def bootstrap_s(sequence, M=100):
+    """
+    Bootstrap algorithm which calculates s-step transition matrix, using bootstrap sequences, that is generated, using
+    MLE of one-step transition matrix.
+    :param sequence: sequence of elements in range (0, A).
+    :return: s-step transition matrix.
+    """
+    Pi_mle = CMM_S.generate_random_Pi(sequence.s, sequence.A)
+    P_mle = MLE_algorithm_s(sequence)
+    bootstraps = [generate_CMM_S(sequence.s, sequence.A, Pi_mle, P_mle, sequence.T) for _ in range(0, M)]
+    bootstrappedP = [MLE_algorithm_s(x) for x in bootstraps]
     averageP = sum(bootstrappedP)/M
     return averageP
 
@@ -134,18 +163,103 @@ def smoothed_estimators(sequence, M=1000, u=0.5):
     :return: one-step transition matrix.
     """
 
-    Pi_mle = CMM.generatePi(sequence.A)
+    Pi_mle = CMM.generate_random_Pi(sequence.A)
     P_mle = MLE_algorithm(sequence)
     omega = 1 + sequence.T**(-u)*sequence.A
     P_mle = (P_mle + sequence.T**(-u))/omega
-    bootstraps = [generate_CMM(Pi_mle, P_mle, 1000) for _ in range(0, M)]
+    bootstraps = [generate_CMM(sequence.A, Pi_mle, P_mle, 1000) for _ in range(0, M)]
     bootstrappedP = [MLE_algorithm(x) for x in bootstraps]
     averageP = sum(bootstrappedP) / M
     return averageP
 
-def estimation_model(sequence, model):
-    P = bootstrap(sequence)
+
+def smoothed_estimators_s(sequence, M=1000, u=0.5):
+    """
+    Smoothed algorithm which calculates s-step transition matrix. This algorithm is similar to bootstrap algorithm,
+    but it's more accurately then MLE of s-step transition matrix is flat.
+    :param sequence: sequence of elements in range (0, A).
+    :param u: positive smoothing parameter.
+    :return: s-step transition matrix.
+    """
+
+    Pi_mle = CMM_S.generate_random_Pi(sequence.s, sequence.A)
+    P_mle = MLE_algorithm_s(sequence)
+    omega = 1 + sequence.T**(-u)*sequence.A
+    P_mle = (P_mle + sequence.T**(-u))/omega
+    bootstraps = [generate_CMM_S(sequence.s, sequence.A, Pi_mle, P_mle, 1000) for _ in range(0, M)]
+    bootstrappedP = [MLE_algorithm_s(x) for x in bootstraps]
+    averageP = sum(bootstrappedP) / M
+    return averageP
+
+
+def estimation_model(sequence, model, alg='bt', params=[]):
+    """
+
+    :param sequence:
+    :param model: initial model.
+    :param alg: {'bt', 'sm', 'mle'}. 'bt' - bootstrap; 'sm' - smoothed algorithm; 'mle' - MLE.
+    :param params: list of parameters. If alg == 'bt', then params == [M]; if alg == 'sm', then params == [M, u],
+     if if alg == 'mle', then params == []. Or params == [] for all alg.
+    :return: model.
+    """
+    if alg == 'sm':
+        if len(params) >= 2:
+            P = smoothed_estimators(sequence, params[0], params[1])
+        if len(params) == 1:
+            P = smoothed_estimators(sequence, params[0])
+        if len(params) ==0:
+            P = smoothed_estimators(sequence)
+    else:
+        if alg == 'mle':
+            P = MLE_algorithm(sequence)
+        else:
+            if alg == 'bt':
+                if len(params) >= 1:
+                    P = bootstrap(sequence, params[0])
+                else:
+                    P = bootstrap(sequence)
+            else:
+                P = MLE_algorithm(sequence)
+
     cmm = CMM(model.N, model.Pi, P)
     return cmm
 
-#print(generate_CMM_S(2, 2, CMM_S.generate_random_Pi(2, 2), CMM_S.generate_random_P(2, 2), 10).sequence)
+def estimation_model_s(sequence, model, alg='bt', params=[]):
+    """
+
+    :param sequence:
+    :param model: initial model.
+    :param alg: {'bt', 'sm', 'mle'}. 'bt' - bootstrap; 'sm' - smoothed algorithm; 'mle' - MLE.
+    :param params: list of parameters. If alg == 'bt', then params == [M]; if alg == 'sm', then params == [M, u],
+     if if alg == 'mle', then params == []. Or params == [] for all alg.
+    :return: model.
+    """
+    if alg == 'sm':
+        if len(params) >= 2:
+            P = smoothed_estimators_s(sequence, params[0], params[1])
+        if len(params) == 1:
+            P = smoothed_estimators_s(sequence, params[0])
+        if len(params) == 0:
+            P = smoothed_estimators_s(sequence)
+    else:
+        if alg == 'mle':
+            P = MLE_algorithm_s(sequence)
+        else:
+            if alg == 'bt':
+                if len(params) >= 1:
+                    P = bootstrap_s(sequence, params[0])
+                else:
+                    P = bootstrap_s(sequence)
+            else:
+                P = MLE_algorithm_s(sequence)
+
+    cmm_s = CMM_S(model.s, model.N, model.Pi, P)
+    return cmm_s
+
+
+pi = CMM_S.generate_random_Pi(2, 2)
+P = CMM_S.generate_random_P(2, 2)
+seq = generate_CMM_S(2, 2, pi, P, 20)
+print(str(pi) + '\n' + str(P) + '\n' + str(seq.sequence))
+print(bootstrap_s(seq))
+print(MLE_algorithm_s(seq))
