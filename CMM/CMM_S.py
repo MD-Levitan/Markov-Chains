@@ -7,9 +7,10 @@ class CMM_S:
             self.init_from_file(name_file)
             return
         self.N = N
+        self.s = s
         if Pi is None or P is None:
-            self.Pi = CMM_S.generate_random_Pi(N)
-            self.P = CMM_S.generate_random_P()
+            self.Pi = CMM_S.generate_random_Pi(self.s, self.N)
+            self.P = CMM_S.generate_random_P(self.s, self.N)
             return
         self.Pi = Pi
         self.P = P

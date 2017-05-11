@@ -147,6 +147,8 @@ def bootstrap_s(sequence, M=100):
     """
     Pi_mle = CMM_S.generate_random_Pi(sequence.s, sequence.A)
     P_mle = MLE_algorithm_s(sequence)
+    if test_flat(P_mle):
+        return smoothed_estimators_s(sequence, M)
     bootstraps = [generate_CMM_S(sequence.s, sequence.A, Pi_mle, P_mle, sequence.T) for _ in range(0, M)]
     bootstrappedP = [MLE_algorithm_s(x) for x in bootstraps]
     averageP = sum(bootstrappedP)/M
@@ -256,10 +258,10 @@ def estimation_model_s(sequence, model, alg='bt', params=[]):
     cmm_s = CMM_S(model.s, model.N, model.Pi, P)
     return cmm_s
 
-
-pi = CMM_S.generate_random_Pi(2, 2)
-P = CMM_S.generate_random_P(2, 2)
-seq = generate_CMM_S(2, 2, pi, P, 20)
-print(str(pi) + '\n' + str(P) + '\n' + str(seq.sequence))
-print(bootstrap_s(seq))
-print(MLE_algorithm_s(seq))
+#
+# pi = CMM_S.generate_random_Pi(2, 2)
+# P = CMM_S.generate_random_P(2, 2)
+# seq = generate_CMM_S(2, 2, pi, P, 10)
+# print(str(pi) + '\n' + str(P) + '\n' + str(seq.sequence))
+# print(bootstrap_s(seq))
+# print(MLE_algorithm_s(seq))
