@@ -1,5 +1,5 @@
-
 import numpy as np
+
 
 class CMM_S:
     def __init__(self, s=None, N=None, Pi=None, P=None, name_file="CMM_S.txt"):
