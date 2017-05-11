@@ -64,8 +64,8 @@ class Estimation:
             plt.grid()
             plt.show()
 
-cmm = CMM_S(10, 2)
-est = Estimation(cmm, 280, 100)
+cmm = CMM_S(3, 3)
+est = Estimation(cmm, 180, 20)
 est.__set_alg__('mle')
 est.graphic()
 

@@ -10,12 +10,12 @@ class Estimation:
             self.model = model
             self.L_max = l_max
             self.K_max = k_max
-            self.sample = Estimation.generate_sample(self.model, self.L_max,
-                                                    self.K_max)
+            self.sample = Estimation.generate_sample(self.model, self.L_max, self.K_max)
 
         @staticmethod
         def generate_sample(model, l_max, k_max):
-            sample = [[alg.generate_HMM(model.N, model.M, model.Pi, model.P, model.C, l) for _ in range(0, k_max)] for l in range(0, l_max)]
+            sample = [[alg.generate_HMM(model.N, model.M, model.Pi, model.P, model.C, l) for _ in range(0, k_max)]
+                      for l in range(1, l_max)]
             return sample
 
         @staticmethod
@@ -24,7 +24,8 @@ class Estimation:
 
         def standard_deviation(self, l, k, param='P'):
             if 0 <= k < self.K_max and 0 <= l < self.L_max:
-                estimation_model = alg.estimation_model(self.sample[l][k], HMM(self.model.N, self.model.M))
+                estimation_model = alg.estimation_model(self.sample[l][k],
+                                                        HMM(self.model.N, self.model.M))
                 if param == 'P':
                     std_deviation = Estimation.norm(estimation_model.P, self.model.P)
                 if param == 'Pi':
@@ -37,18 +38,18 @@ class Estimation:
             if 0 <= l < self.L_max:
                 return sum(self.standard_deviation(l, k) for k in range(0, self.K_max))/self.K_max
 
-        def graphic(self, step=5):
+        def graphic(self):
             import math
-            std = [self.estimation_deviation(l) for l in range(0, self.L_max)]
+            std = [self.estimation_deviation(l) for l in range(0, self.L_max-1)]
             max_value = math.ceil(max(std))
             step_y = max_value / 20
-            step_x = 5
+            step_x = self.L_max / 20
             fig, ax = plt.subplots()
             plt.title("")
 
-            ax.plot(range(0, self.L_max), std)
+            ax.plot(range(1, self.L_max), std)
 
-            ax.set_xticks(np.arange(0, self.L_max, step_x))
+            ax.set_xticks(np.arange(1, self.L_max, step_x))
             ax.set_yticks(np.arange(0, max_value, step_y))
 
             ax.set_xlabel("T")
@@ -60,5 +61,5 @@ class Estimation:
 b = HMM(2, 2)
 print(b)
 
-est = Estimation(b, 100, 1000)
+est = Estimation(b, 1000, 100)
 est.graphic()

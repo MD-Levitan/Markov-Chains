@@ -32,7 +32,7 @@ class Estimation:
             return np.linalg.norm((ar1 - ar2), ord='fro')
 
         def standard_deviation(self, l, k, param='P'):
-            if 0 <= k < self.K_max and 0 <= l < self.L_max - self.model.s - 1:
+            if 0 <= k < self.K_max and 0 <= l < self.L_max - 1:
                 print(str(k) + " " + str(l) + "\n")
                 estimation_model = alg.estimation_model(self.sample[l][k], self.model, alg=self.alg)
                 if param == 'P':
@@ -47,16 +47,16 @@ class Estimation:
 
         def graphic(self):
             import math
-            std = [self.estimation_deviation(l) for l in range(0, self.L_max - self.model.s - 1)]
+            std = [self.estimation_deviation(l) for l in range(0, self.L_max - 1)]
             max_value = math.ceil(max(std))
             step_y = max_value / 20
             step_x = self.L_max / 20
             fig, ax = plt.subplots()
             plt.title("")
 
-            ax.plot(range(self.model.s + 1, self.L_max), std)
+            ax.plot(range(1, self.L_max), std)
 
-            ax.set_xticks(np.arange(self.model.s + 1, self.L_max, step_x))
+            ax.set_xticks(np.arange(1, self.L_max, step_x))
             ax.set_yticks(np.arange(0, max_value, step_y))
 
             ax.set_xlabel("T")
@@ -65,7 +65,7 @@ class Estimation:
             plt.show()
 
 
-cmm = CMM()
-est = Estimation(cmm, 80, 1000)
+cmm = CMM(16)
+est = Estimation(cmm, 180, 50)
 est.graphic()
 

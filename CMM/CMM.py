@@ -9,7 +9,7 @@ class CMM:
         self.N = N
         if Pi is None or P is None:
             self.Pi = CMM.generate_random_Pi(N)
-            self.P = CMM.generate_random_P()
+            self.P = CMM.generate_random_P(N)
             return
         self.Pi = Pi
         self.P = P

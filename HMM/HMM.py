@@ -2,13 +2,29 @@ import numpy as np
 
 
 class HMM:
-    def __init__(self, N=None, M=None, Pi=None, P=None, C=None, name_file="HMM.txt"):
+    def __init__(self, N=None, M=None, Pi=None, P=None, C=None, name_file="HMM.txt", param='random'):
+        """
+
+        :param N:
+        :param M:
+        :param Pi:
+        :param P:
+        :param C:
+        :param name_file:
+        :param param: {'random', 'uniform'} - type of generation params of HMM. #Maybe, in future will be added
+        some other types.
+        """
         if N is None or M is None:
             self.init_from_file(name_file)
             return
         self.N = N
         self.M = M
         if Pi is None or P is None or C is None:
+            if param == 'uniform':
+                self.Pi = HMM.generate_uniform_Pi(N)
+                self.P = HMM.generate_uniform_P(N)
+                self.C = HMM.generate_uniform_C(N, M)
+                return
             self.Pi = HMM.generate_random_Pi(N)
             self.P = HMM.generate_random_P(N)
             self.C = HMM.generate_random_C(N, M)
@@ -16,6 +32,20 @@ class HMM:
         self.Pi = Pi
         self.P = P
         self.C = C
+
+    @staticmethod
+    def generate_uniform_P(N):
+        """
+        Generate uniform Matrix P.
+        :param N: size of alphabet.
+        :return: matrix P.
+        """
+        import random
+        P = np.zeros((N, N))
+        for j in range(0, N):
+            P[j] = [1 / N] * N
+        return P
+
 
     @staticmethod
     def generate_random_P(N):
@@ -34,6 +64,7 @@ class HMM:
             P[j] = [P[j][i] / sum for i in range(0, N)]
         return P
 
+
     @staticmethod
     def generate_P(N, params):
         """
@@ -47,6 +78,20 @@ class HMM:
             params_j = params[j]
             params_j.append(1 - sum(params_j))
             P[j] = params_j
+        return P
+
+    @staticmethod
+    def generate_uniform_C(N, M):
+        """
+        Generate uniform Matrix C .
+        :param N: size of the set of hidden states.
+        :param M: size of the set of visible states.
+        :return: matrix C.
+        """
+        import random
+        P = np.zeros((N, M))
+        for j in range(0, N):
+            P[j] = [1 / M] * M
         return P
 
     @staticmethod
@@ -83,6 +128,16 @@ class HMM:
             P[j] = params_j
         return P
 
+    @staticmethod
+    def generate_uniform_Pi(N):
+        """
+        Generate uniform Array Pi.
+        :param N: size of alphabet.
+        :return:matrix Pi.
+        """
+        import random
+        Pi = np.array([1 / N] * N)
+        return Pi
 
     @staticmethod
     def generate_random_Pi(N):
@@ -187,7 +242,6 @@ class SequenceHMM:
 
     def __str__(self, ):
         return "Sequence:" + str(self.sequence)
-
 
 
 #A = HMM(2, 2)
