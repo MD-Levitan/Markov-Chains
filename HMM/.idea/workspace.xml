@@ -13,10 +13,10 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/HMM$sequenceHMM.coverage" NAME="sequenceHMM Coverage Results" MODIFIED="1484942411553" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/HMM$Estimation.coverage" NAME="Estimation Coverage Results" MODIFIED="1494639467033" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/HMM$sequenceHMM.coverage" NAME="sequenceHMM Coverage Results" MODIFIED="1494709600814" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/HMM$Estimation.coverage" NAME="Estimation Coverage Results" MODIFIED="1494711483960" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/HMM$HMM.coverage" NAME="HMM Coverage Results" MODIFIED="1494467274072" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/HMM$Algorithms.coverage" NAME="Algorithms Coverage Results" MODIFIED="1494633136305" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/HMM$Algorithms.coverage" NAME="Algorithms Coverage Results" MODIFIED="1494711974794" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -26,65 +26,110 @@
     <favorites_list name="HMM" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="HMM.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/HMM.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-234">
-              <caret line="195" column="35" lean-forward="false" selection-start-line="195" selection-start-column="35" selection-end-line="195" selection-end-column="35" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Algorithms.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Algorithms.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="290">
-              <caret line="419" column="0" lean-forward="true" selection-start-line="419" selection-start-column="0" selection-end-line="419" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-                <element signature="e#100#339#0" expanded="false" />
-                <element signature="e#383#1078#0" expanded="false" />
-                <element signature="e#12612#12659#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Estimation.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Estimation.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="488">
-              <caret line="63" column="28" lean-forward="false" selection-start-line="63" selection-start-column="28" selection-end-line="63" selection-end-column="28" />
-              <folding>
-                <element signature="e#0#24#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="data.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="15" lean-forward="false" selection-start-line="0" selection-start-column="15" selection-end-line="0" selection-end-column="15" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HMM.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/HMM.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="5" column="3" lean-forward="false" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="3" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.5">
+      <split-first>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file leaf-file-name="HMM.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/HMM.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="144">
+                  <caret line="196" column="0" lean-forward="false" selection-start-line="196" selection-start-column="0" selection-end-line="196" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Algorithms.py" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/Algorithms.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-2070">
+                  <caret line="81" column="0" lean-forward="true" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
+                  <folding>
+                    <element signature="e#0#18#0" expanded="true" />
+                    <element signature="e#127#366#0" expanded="false" />
+                    <element signature="e#410#1105#0" expanded="false" />
+                    <element signature="e#1150#1760#0" expanded="false" />
+                    <element signature="e#1805#2262#0" expanded="false" />
+                    <element signature="e#2308#2748#0" expanded="false" />
+                    <element signature="e#3168#4022#0" expanded="false" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/__init__.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="18">
+                  <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Algorithms_normalize.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/Algorithms_normalize.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="190">
+                  <caret line="142" column="4" lean-forward="false" selection-start-line="142" selection-start-column="4" selection-end-line="142" selection-end-column="4" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Estimation.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/Estimation.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="0">
+                  <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                  <folding>
+                    <element signature="e#0#24#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="data.txt" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/data.txt">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="0">
+                  <caret line="0" column="15" lean-forward="false" selection-start-line="0" selection-start-column="15" selection-end-line="0" selection-end-column="15" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="HMM.txt" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/HMM.txt">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="90">
+                  <caret line="5" column="3" lean-forward="false" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="3" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file leaf-file-name="Algorithms_normalize.py" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/Algorithms_normalize.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="126">
+                  <caret line="33" column="35" lean-forward="false" selection-start-line="33" selection-start-column="35" selection-end-line="33" selection-end-column="35" />
+                  <folding>
+                    <element signature="e#0#18#0" expanded="true" />
+                    <element signature="e#98#337#0" expanded="false" />
+                    <element signature="e#381#1076#0" expanded="false" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -100,9 +145,11 @@
         <option value="$PROJECT_DIR$/sequenceHMM.py" />
         <option value="$PROJECT_DIR$/HMM.txt" />
         <option value="$PROJECT_DIR$/data.txt" />
+        <option value="$PROJECT_DIR$/Estimation.py" />
+        <option value="$PROJECT_DIR$/__init__.py" />
         <option value="$PROJECT_DIR$/HMM.py" />
         <option value="$PROJECT_DIR$/Algorithms.py" />
-        <option value="$PROJECT_DIR$/Estimation.py" />
+        <option value="$PROJECT_DIR$/Algorithms_normalize.py" />
       </list>
     </option>
   </component>
@@ -132,7 +179,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -148,6 +194,7 @@
         </subPane>
       </pane>
       <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -158,7 +205,7 @@
     <property name="nodejs_interpreter_path" value="/usr/bin/node" />
     <property name="js.eslint.eslintPackage" value="" />
   </component>
-  <component name="RunManager" selected="Python.Estimation">
+  <component name="RunManager" selected="Python.Algorithms">
     <configuration default="false" name="HMM" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -453,10 +500,10 @@
     </list>
     <recent_temporary>
       <list size="4">
-        <item index="0" class="java.lang.String" itemvalue="Python.Estimation" />
-        <item index="1" class="java.lang.String" itemvalue="Python.Algorithms" />
-        <item index="2" class="java.lang.String" itemvalue="Python.HMM" />
-        <item index="3" class="java.lang.String" itemvalue="Python.sequenceHMM" />
+        <item index="0" class="java.lang.String" itemvalue="Python.Algorithms" />
+        <item index="1" class="java.lang.String" itemvalue="Python.Estimation" />
+        <item index="2" class="java.lang.String" itemvalue="Python.sequenceHMM" />
+        <item index="3" class="java.lang.String" itemvalue="Python.HMM" />
       </list>
     </recent_temporary>
   </component>
@@ -474,16 +521,16 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="28" width="1920" height="1026" extended-state="6" />
+    <frame x="0" y="28" width="1920" height="1026" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.09478168" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1256656" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32779622" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33444077" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -516,18 +563,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Estimation.py</url>
-          <line>64</line>
+          <line>119</line>
           <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Algorithms.py</url>
-          <line>230</line>
+          <line>143</line>
           <option name="timeStamp" value="22" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Algorithms.py</url>
-          <line>167</line>
-          <option name="timeStamp" value="24" />
         </line-breakpoint>
       </breakpoints>
       <option name="time" value="25" />
@@ -535,28 +577,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/sequenceHMM.py" />
-    <entry file="file://$PROJECT_DIR$/Algorithms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-            <element signature="e#100#339#0" expanded="false" />
-            <element signature="e#383#1078#0" expanded="false" />
-            <element signature="e#12612#12659#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="11" lean-forward="false" selection-start-line="0" selection-start-column="11" selection-end-line="0" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/HMM.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="54">
@@ -596,9 +616,12 @@
           <caret line="128" column="10" lean-forward="false" selection-start-line="128" selection-start-column="10" selection-end-line="128" selection-end-column="10" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
-            <element signature="e#100#339#0" expanded="false" />
-            <element signature="e#383#1078#0" expanded="false" />
-            <element signature="e#12612#12659#0" expanded="false" />
+            <element signature="e#127#366#0" expanded="false" />
+            <element signature="e#410#1105#0" expanded="false" />
+            <element signature="e#1150#1760#0" expanded="false" />
+            <element signature="e#1805#2262#0" expanded="false" />
+            <element signature="e#2308#2748#0" expanded="false" />
+            <element signature="e#3168#4022#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -634,9 +657,12 @@
           <caret line="128" column="10" lean-forward="false" selection-start-line="128" selection-start-column="10" selection-end-line="128" selection-end-column="10" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
-            <element signature="e#100#339#0" expanded="false" />
-            <element signature="e#383#1078#0" expanded="false" />
-            <element signature="e#12612#12659#0" expanded="false" />
+            <element signature="e#127#366#0" expanded="false" />
+            <element signature="e#410#1105#0" expanded="false" />
+            <element signature="e#1150#1760#0" expanded="false" />
+            <element signature="e#1805#2262#0" expanded="false" />
+            <element signature="e#2308#2748#0" expanded="false" />
+            <element signature="e#3168#4022#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -672,9 +698,12 @@
           <caret line="128" column="10" lean-forward="false" selection-start-line="128" selection-start-column="10" selection-end-line="128" selection-end-column="10" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
-            <element signature="e#100#339#0" expanded="false" />
-            <element signature="e#383#1078#0" expanded="false" />
-            <element signature="e#12612#12659#0" expanded="false" />
+            <element signature="e#127#366#0" expanded="false" />
+            <element signature="e#410#1105#0" expanded="false" />
+            <element signature="e#1150#1760#0" expanded="false" />
+            <element signature="e#1805#2262#0" expanded="false" />
+            <element signature="e#2308#2748#0" expanded="false" />
+            <element signature="e#3168#4022#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -710,9 +739,12 @@
           <caret line="128" column="10" lean-forward="false" selection-start-line="128" selection-start-column="10" selection-end-line="128" selection-end-column="10" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
-            <element signature="e#100#339#0" expanded="false" />
-            <element signature="e#383#1078#0" expanded="false" />
-            <element signature="e#12612#12659#0" expanded="false" />
+            <element signature="e#127#366#0" expanded="false" />
+            <element signature="e#410#1105#0" expanded="false" />
+            <element signature="e#1150#1760#0" expanded="false" />
+            <element signature="e#1805#2262#0" expanded="false" />
+            <element signature="e#2308#2748#0" expanded="false" />
+            <element signature="e#3168#4022#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -748,9 +780,12 @@
           <caret line="26" column="19" lean-forward="false" selection-start-line="26" selection-start-column="19" selection-end-line="26" selection-end-column="19" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
-            <element signature="e#100#339#0" expanded="false" />
-            <element signature="e#383#1078#0" expanded="false" />
-            <element signature="e#12612#12659#0" expanded="false" />
+            <element signature="e#127#366#0" expanded="false" />
+            <element signature="e#410#1105#0" expanded="false" />
+            <element signature="e#1150#1760#0" expanded="false" />
+            <element signature="e#1805#2262#0" expanded="false" />
+            <element signature="e#2308#2748#0" expanded="false" />
+            <element signature="e#3168#4022#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -786,9 +821,12 @@
           <caret line="26" column="19" lean-forward="false" selection-start-line="26" selection-start-column="19" selection-end-line="26" selection-end-column="19" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
-            <element signature="e#100#339#0" expanded="false" />
-            <element signature="e#383#1078#0" expanded="false" />
-            <element signature="e#12612#12659#0" expanded="false" />
+            <element signature="e#127#366#0" expanded="false" />
+            <element signature="e#410#1105#0" expanded="false" />
+            <element signature="e#1150#1760#0" expanded="false" />
+            <element signature="e#1805#2262#0" expanded="false" />
+            <element signature="e#2308#2748#0" expanded="false" />
+            <element signature="e#3168#4022#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -869,33 +907,60 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Estimation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/lib/python3/dist-packages/numpy/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2794">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/HMM.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-234">
-          <caret line="195" column="35" lean-forward="false" selection-start-line="195" selection-start-column="35" selection-end-line="195" selection-end-column="35" />
+        <state relative-caret-position="144">
+          <caret line="196" column="0" lean-forward="false" selection-start-line="196" selection-start-column="0" selection-end-line="196" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Algorithms_normalize.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="142" column="4" lean-forward="false" selection-start-line="142" selection-start-column="4" selection-end-line="142" selection-end-column="4" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Algorithms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="419" column="0" lean-forward="true" selection-start-line="419" selection-start-column="0" selection-end-line="419" selection-end-column="0" />
+        <state relative-caret-position="-2070">
+          <caret line="81" column="0" lean-forward="true" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
-            <element signature="e#100#339#0" expanded="false" />
-            <element signature="e#383#1078#0" expanded="false" />
-            <element signature="e#12612#12659#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Estimation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="488">
-          <caret line="63" column="28" lean-forward="false" selection-start-line="63" selection-start-column="28" selection-end-line="63" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
+            <element signature="e#127#366#0" expanded="false" />
+            <element signature="e#410#1105#0" expanded="false" />
+            <element signature="e#1150#1760#0" expanded="false" />
+            <element signature="e#1805#2262#0" expanded="false" />
+            <element signature="e#2308#2748#0" expanded="false" />
+            <element signature="e#3168#4022#0" expanded="false" />
           </folding>
         </state>
       </provider>

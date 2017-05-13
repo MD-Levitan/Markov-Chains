@@ -127,5 +127,5 @@ def estimation_model(sequence, N, alg='bt', params=[]):
             else:
                 P = MLE_algorithm(sequence)
 
-    cmm = CMM(N, CMM.generate_random_Pi(), P)
+    cmm = CMM(N, CMM.generate_random_Pi(N), P)
     return cmm
