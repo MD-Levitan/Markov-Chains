@@ -61,5 +61,5 @@ class Estimation:
 b = HMM(2, 2)
 print(b)
 
-est = Estimation(b, 1000, 100)
+est = Estimation(b, 1000, 10)
 est.graphic()

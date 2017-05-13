@@ -98,11 +98,11 @@ def smoothed_estimators(sequence, M=1000, u=0.5):
     return averageP
 
 
-def estimation_model(sequence, model, alg='bt', params=[]):
+def estimation_model(sequence, N, alg='bt', params=[]):
     """
 
     :param sequence:
-    :param model: initial model.
+    :param N: size of alphabet.
     :param alg: {'bt', 'sm', 'mle'}. 'bt' - bootstrap; 'sm' - smoothed algorithm; 'mle' - MLE.
     :param params: list of parameters. If alg == 'bt', then params == [M]; if alg == 'sm', then params == [M, u],
      if if alg == 'mle', then params == []. Or params == [] for all alg.
@@ -127,5 +127,5 @@ def estimation_model(sequence, model, alg='bt', params=[]):
             else:
                 P = MLE_algorithm(sequence)
 
-    cmm = CMM(model.N, model.Pi, P)
+    cmm = CMM(N, CMM.generate_random_Pi(), P)
     return cmm
